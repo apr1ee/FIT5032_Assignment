@@ -38,9 +38,31 @@
       </div>
     </div>
   </div>
+  <hr class="my-5"/>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title mb-2">Mindfulness Starter Video</h5>
+    <p class="text-muted">A short breathing exercise to reduce anxiety.</p>
+
+    <div class="mb-2">
+      <RatingStars v-model="my" />
+      <button class="btn btn-primary btn-sm ms-2" @click="submit">Submit rating</button>
+    </div>
+
+    <div class="small text-muted">Average: {{ avg.avg }} ({{ avg.count }} ratings)</div>
+  </div>
+</div>
+
 </section>
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router'
+import RatingStars from '../components/RatingStars.vue'
+import { ref, computed } from 'vue'
+import { rate, getAverage } from '../utils/ratingsStore'
+const RID = 'resource:mindfulness-101'
+const my = ref(0)
+const avg = computed(()=> getAverage(RID))
+function submit(){ if(my.value>0){ rate(RID, my.value); my.value=0 } }
 </script>
+

@@ -1,3 +1,5 @@
+import { escapeHTML } from '../utils/sanitize'
+
 <template>
   <section class="row justify-content-center">
     <div class="col-12 col-lg-8">
@@ -81,3 +83,5 @@ function saveEntry() {
   router.push('/journals')
 }
 </script>
+
+text: escapeHTML(form.text),

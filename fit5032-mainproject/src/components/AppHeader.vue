@@ -6,22 +6,38 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><RouterLink class="nav-link" to="/">Home</RouterLink></li>
-        <li class="nav-item"><RouterLink class="nav-link" to="/journal">Journal</RouterLink></li>
-        <li class="nav-item"><RouterLink class="nav-link" to="/journals">My Journals</RouterLink></li>
-      </ul>
+    <div class="navbar-end gap-2">
+  <form class="d-none d-md-flex me-2" role="search">
+    <input class="form-control" type="search" placeholder="Search…" />
+  </form>
 
-      <form class="d-none d-md-flex me-3" role="search">
-        <input class="form-control" type="search" placeholder="Search…" aria-label="Search" />
-      </form>
-      <RouterLink class="btn btn-primary" to="/auth">Login / Sign up</RouterLink>
+  <template v-if="user">
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+        {{ user.email }} <span class="badge bg-secondary ms-1">{{ user.role }}</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><RouterLink class="dropdown-item" to="/journals">My Journals</RouterLink></li>
+        <li v-if="user.role==='admin'"><RouterLink class="dropdown-item" to="/admin">Admin</RouterLink></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><button class="dropdown-item" @click="onLogout">Logout</button></li>
+      </ul>
     </div>
+  </template>
+  <template v-else>
+    <RouterLink class="btn btn-primary" to="/auth">Login / Sign up</RouterLink>
+  </template>
+</div>
+
   </div>
 </nav>
 </template>
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { currentUser, logout } from '../utils/authStore'
+import { ref } from 'vue'
+const user = ref(currentUser())
+function onLogout(){ logout(); location.href='/' }
 </script>
+
