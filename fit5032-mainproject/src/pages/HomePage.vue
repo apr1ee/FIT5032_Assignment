@@ -1,68 +1,74 @@
 <template>
-  <section class="section">
-  <div class="text-center mb-5">
-    <div class="kicker mb-2">Youth Mental Health & Wellbeing</div>
-    <h1 class="fw-bold mb-2">Your space to track moods & get support</h1>
-    <p class="text-muted mb-4">Journal → Insights → Community → Local resources</p>
-    <div class="d-flex gap-2 justify-content-center">
-      <RouterLink class="btn btn-primary btn-lg px-4" to="/journal">Write Journal</RouterLink>
-      <RouterLink class="btn btn-outline-primary btn-lg px-4" to="/journals">My Journals</RouterLink>
-    </div>
-  </div>
-
-  <!-- 三个功能卡：手机1列 / 平板2列 / 桌面3列 -->
-  <div class="row g-4">
-    <div class="col-12 col-md-6 col-xl-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Write Journal</h5>
-          <p class="text-muted">Quick mood check-in, then safe, private writing.</p>
-          <RouterLink class="stretched-link" to="/journal"></RouterLink>
+  <div class="bg-gradient-to-b from-blue-50 to-white">
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-16 md:py-24">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+          青少年心理健康平台
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-600 mb-8">
+          一个安全、支持性的空间，帮助青少年管理情绪、建立连接，获得专业支持
+        </p>
+        <div class="space-x-4">
+          <button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
+            开始我的心理健康之旅
+          </button>
+          <button class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
+            了解更多
+          </button>
         </div>
       </div>
-    </div>
-    <div class="col-12 col-md-6 col-xl-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">View Trends</h5>
-          <p class="text-muted">Weekly/monthly mood patterns at a glance.</p>
+    </section>
+
+    <!-- Features Overview -->
+    <section class="container mx-auto px-4 py-16">
+      <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">
+        我们如何帮助你
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">📝</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">情绪日记</h3>
+          <p class="text-gray-600">记录情绪变化，追踪心理健康趋势</p>
+        </div>
+        
+        <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">👥</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">同伴支持</h3>
+          <p class="text-gray-600">在安全的环境中与同龄人分享和交流</p>
+        </div>
+        
+        <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">📚</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">心理教育</h3>
+          <p class="text-gray-600">学习实用的心理健康知识和技能</p>
+        </div>
+        
+        <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+          <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">🗺️</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">本地资源</h3>
+          <p class="text-gray-600">找到附近的心理健康支持服务</p>
         </div>
       </div>
-    </div>
-    <div class="col-12 col-md-6 col-xl-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">Explore Resources</h5>
-          <p class="text-muted">Find nearby low/no-cost support and activities.</p>
-        </div>
-      </div>
-    </div>
+    </section>
   </div>
-  <hr class="my-5"/>
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title mb-2">Mindfulness Starter Video</h5>
-    <p class="text-muted">A short breathing exercise to reduce anxiety.</p>
-
-    <div class="mb-2">
-      <RatingStars v-model="my" />
-      <button class="btn btn-primary btn-sm ms-2" @click="submit">Submit rating</button>
-    </div>
-
-    <div class="small text-muted">Average: {{ avg.avg }} ({{ avg.count }} ratings)</div>
-  </div>
-</div>
-
-</section>
 </template>
 
-<script setup>
-import RatingStars from '../components/RatingStars.vue'
-import { ref, computed } from 'vue'
-import { rate, getAverage } from '../utils/ratingsStore'
-const RID = 'resource:mindfulness-101'
-const my = ref(0)
-const avg = computed(()=> getAverage(RID))
-function submit(){ if(my.value>0){ rate(RID, my.value); my.value=0 } }
+<script>
+export default {
+  name: 'HomePage',
+  setup() {
+    return {
+      
+    }
+  }
+}
 </script>
-

@@ -1,7 +1,7 @@
 # FIT5032 Youth Wellbeing Web Application
 
 A Vue 3 + Vite based web application developed as part of the FIT5032 assignment.  
-The project focuses on youth mental health and wellbeing, implementing journaling, mood tracking, and community support features.  
+The project focuses on youth mental health and wellbeing, implementing journaling, mood tracking, and community support features.
 
 This README provides setup instructions, project structure, and mapping to **Business Requirements (BR A & B)** as specified in the course documentation.
 
@@ -10,6 +10,7 @@ This README provides setup instructions, project structure, and mapping to **Bus
 ## Getting Started
 
 ### Prerequisites
+
 - **Node.js ≥ 18** (LTS recommended)  
   Check your version:
   ```bash
@@ -18,7 +19,9 @@ This README provides setup instructions, project structure, and mapping to **Bus
 - **npm** (default package manager for this project)
 
 ### Installation
+
 Clone the repository and install dependencies:
+
 ```bash
 git clone <repo-url>
 cd fit5032-mainproject
@@ -30,31 +33,35 @@ npm install
 ```
 
 ### Development
+
 Run the development server:
+
 ```bash
 npm run dev
 ```
 
 ### Build for Production
+
 ```bash
 npm run build
 ```
 
 ### Preview Production Build
+
 ```bash
 npm run preview
 ```
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 fit5032-mainproject/
 ├─ public/                # Static assets (e.g., favicon)
 ├─ src/
 │  ├─ components/         # Shared UI components
-│  │  ├─ AppHeader.vue
+│  │  ├─ common/AppHeader.vue
 │  │  └─ AppFooter.vue
 │  ├─ pages/              # Route-based views
 │  │  ├─ HomePage.vue
@@ -77,7 +84,7 @@ fit5032-mainproject/
 
 ---
 
-##  Tech Stack
+## Tech Stack
 
 - **Vue 3 (Composition API)** — Component framework
 - **Vite** — Build tool and dev server
@@ -87,19 +94,21 @@ fit5032-mainproject/
 
 ---
 
-##  Business Requirements Coverage
+## Business Requirements Coverage
 
 ### Category A
+
 - **BR (A.1) Development Stack**: Built with VueJS 3 and Vite.
 - **BR (A.2) Responsiveness**: Responsive design achieved with Bootstrap grid system.
 
 ### Category B
-- **BR (B.1) Validations**:  
-  - Auth form validates required fields, email format, and password length.  
+
+- **BR (B.1) Validations**:
+  - Auth form validates required fields, email format, and password length.
   - Error messages displayed inline.
-- **BR (B.2) Dynamic Data**:  
-  - Journals stored/retrieved via LocalStorage.  
-  - Draft auto-saved, refresh-proof.  
+- **BR (B.2) Dynamic Data**:
+  - Journals stored/retrieved via LocalStorage.
+  - Draft auto-saved, refresh-proof.
   - JournalList dynamically renders, with search and tag filter.
 
 ---
@@ -117,44 +126,44 @@ fit5032-mainproject/
 
 ---
 
-##  Development Notes
+## Development Notes
 
-- Use `<script setup>` in Vue SFCs for concise code.  
-- Routing handled in `src/router/index.js`.  
-- Component naming convention: `PascalCase.vue`.  
+- Use `<script setup>` in Vue SFCs for concise code.
+- Routing handled in `src/router/index.js`.
+- Component naming convention: `PascalCase.vue`.
 - Custom styles should be added to `src/styles/theme.css`.
 
 ---
 
-##  Troubleshooting
+## Troubleshooting
 
 1. **`vite: command not found`**  
-   → Run `npm ci` or `npm install` in project root.  
+   → Run `npm ci` or `npm install` in project root.
 
 2. **No styles / broken layout**  
-   → Ensure Bootstrap CDN links exist in `index.html`.  
+   → Ensure Bootstrap CDN links exist in `index.html`.
 
 3. **LocalStorage not persisting**  
-   → Check browser DevTools → Application → Local Storage keys:  
-   - `yw_journals`  
-   - `yw_journal_draft`  
+   → Check browser DevTools → Application → Local Storage keys:
+   - `yw_journals`
+   - `yw_journal_draft`
 
 4. **Case-sensitive imports**  
    → On Linux/CI ensure import paths match file names exactly.
 
 ---
 
-##  Next Steps (Future BRs)
+## Next Steps (Future BRs)
 
-- **Authentication (C.1, C.2)**: Implement login/register and role-based access.  
-- **Rating (C.3)**: Add aggregated rating system for resources or journals.  
-- **Interactive Tables (D.3)**: Integrate DataTables with sorting, search, pagination.  
-- **Cloud Deployment (D.4)**: Host on Cloudflare, Vercel, or similar.  
+- **Authentication (C.1, C.2)**: Implement login/register and role-based access.
+- **Rating (C.3)**: Add aggregated rating system for resources or journals.
+- **Interactive Tables (D.3)**: Integrate DataTables with sorting, search, pagination.
+- **Cloud Deployment (D.4)**: Host on Cloudflare, Vercel, or similar.
 - **Innovation (F.1)**: Explore features like calendar booking, admin dashboard, GenAI integration.
 
 ---
 
-##  License & Credits
+## License & Credits
 
 This project is part of **FIT5032** coursework.  
 Open-source libraries used: Vue, Vite, Vue Router, Bootstrap.

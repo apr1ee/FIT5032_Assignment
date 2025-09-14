@@ -1,16 +1,22 @@
 <template>
-  <AppHeader />
-  <main class="container my-4">
-    <router-view />
-  </main>
-  <AppFooter />
+  <div id="app">
+    <AppHeader />
+    <main class="min-h-screen">
+      <router-view />
+    </main>
+    <AppFooter />
+  </div>
 </template>
 
-<script setup>
-import AppHeader from './components/AppHeader.vue'
-import AppFooter from './components/AppFooter.vue'
-</script>
+<script>
+import AppHeader from './components/common/AppHeader.vue'
+import AppFooter from './components/common/AppFooter.vue'
 
-<style>
-/* 可放一些全局微调样式 */
-</style>
+export default {
+  name: 'App',
+  components: {
+    AppHeader,
+    AppFooter
+  }
+}
+</script>
