@@ -10,12 +10,18 @@
           一个安全、支持性的空间，帮助青少年管理情绪、建立连接，获得专业支持
         </p>
         <div class="space-x-4">
-          <button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
+          <router-link 
+            to="/auth/register" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
+          >
             开始我的心理健康之旅
-          </button>
-          <button class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg text-lg font-semibold transition-colors">
-            了解更多
-          </button>
+          </router-link>
+          <router-link 
+            to="/demo/rating" 
+            class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg text-lg font-semibold transition-colors"
+          >
+            体验功能演示
+          </router-link>
         </div>
       </div>
     </section>
@@ -31,7 +37,13 @@
             <span class="text-2xl">📝</span>
           </div>
           <h3 class="text-xl font-semibold mb-2">情绪日记</h3>
-          <p class="text-gray-600">记录情绪变化，追踪心理健康趋势</p>
+          <p class="text-gray-600 mb-3">记录情绪变化，追踪心理健康趋势</p>
+          <router-link 
+            to="/journal/compose" 
+            class="text-blue-600 hover:text-blue-700 font-medium text-sm"
+          >
+            开始写日记 →
+          </router-link>
         </div>
         
         <div class="text-center p-6 bg-white rounded-lg shadow-sm">
@@ -39,7 +51,13 @@
             <span class="text-2xl">👥</span>
           </div>
           <h3 class="text-xl font-semibold mb-2">同伴支持</h3>
-          <p class="text-gray-600">在安全的环境中与同龄人分享和交流</p>
+          <p class="text-gray-600 mb-3">在安全的环境中与同龄人分享和交流</p>
+          <router-link 
+            to="/demo/rating" 
+            class="text-blue-600 hover:text-blue-700 font-medium text-sm"
+          >
+            体验互动功能 →
+          </router-link>
         </div>
         
         <div class="text-center p-6 bg-white rounded-lg shadow-sm">

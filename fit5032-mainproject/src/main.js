@@ -7,6 +7,8 @@ import './styles/main.css'
 import HomePage from './pages/HomePage.vue'
 import LoginPage from './pages/auth/LoginPage.vue'
 import RegisterPage from './pages/auth/RegisterPage.vue'
+import RatingDemoPage from './pages/RatingDemoPage.vue'
+import SecureJournalCompose from './pages/journal/SecureJournalCompose.vue'
 
 // 路由配置
 const routes = [
@@ -31,6 +33,23 @@ const routes = [
     meta: { 
       requiresGuest: true,
       title: '注册 - MindCare'
+    }
+  },
+  {
+    path: '/demo/rating',
+    name: 'RatingDemo',
+    component: RatingDemoPage,
+    meta: {
+      title: '评分系统演示 - MindCare'
+    }
+  },
+  {
+    path: '/journal/compose',
+    name: 'JournalCompose',
+    component: SecureJournalCompose,
+    meta: {
+      requiresAuth: true,
+      title: '写日记 - MindCare'
     }
   }
 ]
