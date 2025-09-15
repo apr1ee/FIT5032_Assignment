@@ -1,98 +1,102 @@
 <template>
-  <header class="bg-white shadow-sm">
-    <nav class="container mx-auto px-4 py-4">
-      <div class="flex items-center justify-between">
-        <!-- Logo -->
-        <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-            <span class="text-white font-bold text-sm">M</span>
+  <footer class="bg-gray-900 text-white">
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Logo and Description -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center space-x-2 mb-4">
+            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <span class="text-white font-bold text-sm">M</span>
+            </div>
+            <span class="text-xl font-bold">MindCare</span>
           </div>
-          <span class="text-xl font-bold text-gray-900">MindCare</span>
-        </div>
-
-        <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center space-x-8">
-          <router-link to="/" class="text-gray-700 hover:text-blue-600 transition-colors">
-            首页
-          </router-link>
-          <router-link to="/learn" class="text-gray-700 hover:text-blue-600 transition-colors">
-            学习
-          </router-link>
-          <router-link to="/journal" class="text-gray-700 hover:text-blue-600 transition-colors">
-            日记
-          </router-link>
-          <router-link to="/resources" class="text-gray-700 hover:text-blue-600 transition-colors">
-            资源
-          </router-link>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="hidden md:flex items-center space-x-4">
-          <button class="text-blue-600 hover:text-blue-700 px-4 py-2 font-medium transition-colors">
-            登录
-          </button>
-          <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-            注册
-          </button>
-        </div>
-
-        <!-- Mobile menu button -->
-        <button 
-          class="md:hidden p-2"
-          @click="toggleMobileMenu"
-        >
-          <span class="sr-only">打开菜单</span>
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile Navigation -->
-      <div v-show="showMobileMenu" class="md:hidden mt-4 pb-4 border-t border-gray-200">
-        <div class="space-y-4 pt-4">
-          <router-link to="/" class="block text-gray-700 hover:text-blue-600 transition-colors">
-            首页
-          </router-link>
-          <router-link to="/learn" class="block text-gray-700 hover:text-blue-600 transition-colors">
-            学习
-          </router-link>
-          <router-link to="/journal" class="block text-gray-700 hover:text-blue-600 transition-colors">
-            日记
-          </router-link>
-          <router-link to="/resources" class="block text-gray-700 hover:text-blue-600 transition-colors">
-            资源
-          </router-link>
-          <div class="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-            <button class="text-left text-blue-600 hover:text-blue-700 font-medium transition-colors">
-              登录
-            </button>
-            <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
-              注册
-            </button>
+          <p class="text-gray-300 mb-4 max-w-md">
+            为青少年提供安全、支持性的心理健康平台，帮助管理情绪、建立连接，获得专业支持。
+          </p>
+          <div class="text-sm text-gray-400 space-y-1">
+            <p>🌟 如果你正在经历危机，请立即寻求专业帮助</p>
+            <p>📞 危机热线：1300-659-467 (Lifeline)</p>
           </div>
         </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h3 class="font-semibold mb-4">快速链接</h3>
+          <ul class="space-y-3 text-gray-300">
+            <li>
+              <a href="/about" class="group hover:text-white transition-colors flex items-center">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-3 transform transition-transform group-hover:scale-125"></span>
+                关于我们
+              </a>
+            </li>
+            <li>
+              <a href="/support" class="group hover:text-white transition-colors flex items-center">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-3 transform transition-transform group-hover:scale-125"></span>
+                获取支持
+              </a>
+            </li>
+            <li>
+              <a href="/privacy" class="group hover:text-white transition-colors flex items-center">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-3 transform transition-transform group-hover:scale-125"></span>
+                隐私政策
+              </a>
+            </li>
+            <li>
+              <a href="/terms" class="group hover:text-white transition-colors flex items-center">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-3 transform transition-transform group-hover:scale-125"></span>
+                服务条款
+              </a>
+            </li>
+            <li>
+              <a href="/contact" class="group hover:text-white transition-colors flex items-center">
+                <span class="w-2 h-2 bg-green-400 rounded-full mr-3 transform transition-transform group-hover:scale-125"></span>
+                联系我们
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 你可以在此处继续扩展更多列，例如：法律信息、产品、社交媒体等 -->
       </div>
-    </nav>
-  </header>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-gray-800 pt-8 mt-8">
+        <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+          <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-gray-400 text-sm">
+            <p>&copy; 2025 MindCare. 保留所有权利。</p>
+            <div class="flex items-center space-x-2">
+              <span>使用</span>
+              <span class="px-2 py-1 bg-blue-600 text-white text-xs rounded font-medium">Vue.js 3</span>
+              <span>构建</span>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <!-- 无障碍标识 -->
+            <div class="flex items-center space-x-2 text-xs text-gray-400">
+              <span>符合</span>
+              <span class="px-2 py-1 bg-green-700 text-green-100 rounded">WCAG 2.1 AA</span>
+              <span>无障碍标准</span>
+            </div>
+
+            <!-- 安全标识 -->
+            <div class="flex items-center space-x-1 text-xs text-gray-400">
+              <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
+              </svg>
+              <span>安全防护</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 
-<script>
-import { ref } from 'vue'
-
-export default {
-  name: 'AppHeader',
-  setup() {
-    const showMobileMenu = ref(false)
-
-    const toggleMobileMenu = () => {
-      showMobileMenu.value = !showMobileMenu.value
-    }
-
-    return {
-      showMobileMenu,
-      toggleMobileMenu
-    }
-  }
-}
+<script setup>
+/* 仅命名可选：在 <script setup> 中不必显式导出 */
 </script>
+
+<!-- 无自定义样式也可以，Tailwind 已处理响应式；保留块占位供后续扩展 -->
+<style scoped>
+</style>

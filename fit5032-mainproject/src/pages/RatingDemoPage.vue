@@ -1,143 +1,203 @@
-<!-- src/components/journal/JournalCard.vue -->
+<!-- src/pages/RatingDemoPage.vue -->
 <template>
-  <article class="journal-card bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow duration-200">
-    <!-- 头部信息 -->
-    <header class="flex items-start justify-between mb-4">
-      <div class="flex items-center space-x-3">
-        <!-- 用户头像 -->
-        <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-          <span class="text-white font-medium text-sm">
-            {{ entry.isAnonymous ? '匿' : getInitials(entry.username) }}
-          </span>
+  <div class="min-h-screen bg-gray-50 py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 页面标题 -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">评分系统演示</h1>
+        <p class="mt-2 text-gray-600">体验我们的情绪评分和社区互动功能</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- 情绪评分演示 -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-6">情绪评分组件</h2>
+          
+          <MoodRating
+            v-model="demoMoodRating"
+            v-model:description="demoMoodDescription"
+            v-model:tags="demoMoodTags"
+            label="今天你的整体情绪如何？"
+            description="选择最符合你当前感受的评分"
+            required
+            @rating-change="handleRatingChange"
+          />
+
+          <!-- 评分结果显示 -->
+          <div v-if="demoMoodRating" class="mt-6 p-4 bg-blue-50 rounded-lg">
+            <h3 class="font-medium text-blue-900 mb-2">评分结果:</h3>
+            <div class="space-y-2 text-sm">
+              <p><strong>情绪评分:</strong> {{ demoMoodRating }}/10</p>
+              <p v-if="demoMoodDescription"><strong>感受描述:</strong> {{ demoMoodDescription }}</p>
+              <p v-if="demoMoodTags.length > 0">
+                <strong>相关标签:</strong> 
+                <span class="ml-1">
+                  <span 
+                    v-for="tag in demoMoodTags" 
+                    :key="tag"
+                    class="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs mr-1"
+                  >
+                    {{ getTagLabel(tag) }}
+                  </span>
+                </span>
+              </p>
+            </div>
+          </div>
         </div>
+
+        <!-- 内容评价演示 -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-6">内容评价组件</h2>
+          
+          <div class="border border-gray-200 rounded-lg p-4 mb-4">
+            <h3 class="font-medium text-gray-900 mb-2">示例日记内容</h3>
+            <p class="text-gray-700 text-sm mb-3">
+              今天是周一，感觉有点焦虑，担心这周的工作任务太多。但是和朋友聊了聊，心情好了一些。
+              希望大家也能找到属于自己的放松方式。
+            </p>
+            <div class="flex space-x-2 mb-3">
+              <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">#焦虑</span>
+              <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">#朋友</span>
+            </div>
+          </div>
+
+          <ContentRating
+            content-id="demo-1"
+            :initial-support-count="12"
+            :initial-comment-count="3"
+            :initial-comments="demoComments"
+            :is-initially-supported="false"
+            @support-changed="handleSupportChanged"
+            @comment-submitted="handleCommentSubmitted"
+            @content-reported="handleContentReported"
+          />
+        </div>
+      </div>
+
+      <!-- 日记卡片演示 -->
+      <div class="mt-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-6">日记卡片演示</h2>
         
-        <div>
-          <div class="flex items-center space-x-2">
-            <h3 class="font-medium text-gray-900">
-              {{ entry.isAnonymous ? '匿名用户' : entry.username }}
-            </h3>
-            <span v-if="entry.isCounselor" class="px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">
-              志愿咨询师
-            </span>
+        <div class="grid gap-6">
+          <JournalCard
+            v-for="entry in demoEntries"
+            :key="entry.id"
+            :entry="entry"
+            :is-owner="entry.id === 1"
+            @entry-updated="handleEntryUpdated"
+            @entry-reported="handleEntryReported"
+          />
+        </div>
+      </div>
+
+      <!-- 功能说明 -->
+      <div class="mt-12 bg-white rounded-lg shadow-sm p-6">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">BR C.3 - 评分系统功能说明</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-medium text-gray-900 mb-2">情绪评分功能</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• 支持1-10分评分或表情评分</li>
+              <li>• 可添加情绪描述和相关标签</li>
+              <li>• 实时验证和错误提示</li>
+              <li>• 支持危机关键词检测</li>
+              <li>• 无障碍键盘导航支持</li>
+            </ul>
           </div>
-          <time class="text-sm text-gray-500">
-            {{ formatDate(entry.createdAt) }}
-          </time>
-        </div>
-      </div>
-
-      <!-- 情绪评分显示 -->
-      <div class="flex items-center space-x-2">
-        <div class="flex items-center justify-center w-8 h-8 rounded-full" :style="{ backgroundColor: getMoodColor(entry.moodRating) + '20' }">
-          <span class="text-sm font-bold" :style="{ color: getMoodColor(entry.moodRating) }">
-            {{ entry.moodRating }}
-          </span>
-        </div>
-        <span class="text-xs text-gray-500">{{ getMoodLabel(entry.moodRating) }}</span>
-      </div>
-    </header>
-
-    <!-- 日记内容 -->
-    <div class="mb-4">
-      <div class="prose prose-sm max-w-none">
-        <p class="text-gray-800 leading-relaxed">
-          {{ isExpanded ? entry.content : truncatedContent }}
-        </p>
-      </div>
-      
-      <!-- 展开/收起按钮 -->
-      <button
-        v-if="needsTruncation"
-        @click="toggleExpanded"
-        class="text-blue-600 hover:text-blue-700 text-sm font-medium mt-2 focus:outline-none"
-      >
-        {{ isExpanded ? '收起' : '展开全文' }}
-      </button>
-    </div>
-
-    <!-- 标签 -->
-    <div v-if="entry.tags && entry.tags.length > 0" class="mb-4">
-      <div class="flex flex-wrap gap-2">
-        <span
-          v-for="tag in entry.tags"
-          :key="tag"
-          class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
-        >
-          #{{ getTagLabel(tag) }}
-        </span>
-      </div>
-    </div>
-
-    <!-- 情绪描述 -->
-    <div v-if="entry.moodDescription" class="mb-4 p-3 bg-gray-50 rounded-lg">
-      <p class="text-sm text-gray-700 italic">
-        "{{ entry.moodDescription }}"
-      </p>
-    </div>
-
-    <!-- 互动区域 -->
-    <footer>
-      <ContentRating
-        :content-id="entry.id"
-        :initial-support-count="entry.supportCount || 0"
-        :initial-comment-count="entry.commentCount || 0"
-        :initial-comments="entry.comments || []"
-        :is-initially-supported="entry.isSupported || false"
-        :show-report-button="!isOwner"
-        @support-changed="handleSupportChanged"
-        @comment-submitted="handleCommentSubmitted"
-        @content-reported="handleContentReported"
-      />
-    </footer>
-
-    <!-- 危机支持横幅 -->
-    <div v-if="hasCrisisContent" class="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-      <div class="flex items-start">
-        <svg class="w-5 h-5 text-red-500 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-        </svg>
-        <div>
-          <p class="text-sm font-medium text-red-800">如果你正在经历困难</p>
-          <p class="text-sm text-red-700 mt-1">
-            记住你并不孤单，专业帮助随时可得。
-          </p>
-          <div class="mt-2 space-x-2">
-            <button class="text-sm bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors">
-              获取支持
-            </button>
-            <span class="text-sm text-red-700">紧急热线: 13 11 14</span>
+          
+          <div>
+            <h3 class="font-medium text-gray-900 mb-2">社区评价功能</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• 点赞/支持功能</li>
+              <li>• 匿名或实名评论</li>
+              <li>• 评论点赞系统</li>
+              <li>• 内容举报机制</li>
+              <li>• 危机内容自动检测</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
-  </article>
+  </div>
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, reactive } from 'vue'
+import MoodRating from '../components/journal/MoodRating.vue'
 import ContentRating from '../components/journal/ContentRating.vue'
+import JournalCard from '../components/journal/JournalCard.vue'
+
 export default {
-  name: 'JournalCard',
+  name: 'RatingDemoPage',
   components: {
-    ContentRating
+    MoodRating,
+    ContentRating,
+    JournalCard
   },
-  props: {
-    entry: {
-      type: Object,
-      required: true
-    },
-    isOwner: {
-      type: Boolean,
-      default: false
-    },
-    maxLength: {
-      type: Number,
-      default: 200
-    }
-  },
-  emits: ['entry-updated', 'entry-reported'],
-  setup(props, { emit }) {
-    const isExpanded = ref(false)
+  setup() {
+    // 情绪评分演示数据
+    const demoMoodRating = ref(null)
+    const demoMoodDescription = ref('')
+    const demoMoodTags = ref([])
+
+    // 演示评论数据
+    const demoComments = reactive([
+      {
+        id: 1,
+        content: '我也有类似的感受，和朋友聊天确实很有帮助！加油！',
+        username: '小明',
+        isAnonymous: false,
+        isCounselor: false,
+        createdAt: new Date(Date.now() - 3600000), // 1小时前
+        likeCount: 2,
+        isLiked: false
+      },
+      {
+        id: 2,
+        content: '周一综合症很常见，试试深呼吸和听音乐放松一下。你不是一个人在战斗！',
+        username: '心理咨询师李老师',
+        isAnonymous: false,
+        isCounselor: true,
+        createdAt: new Date(Date.now() - 1800000), // 30分钟前
+        likeCount: 5,
+        isLiked: true
+      }
+    ])
+
+    // 演示日记条目
+    const demoEntries = reactive([
+      {
+        id: 1,
+        username: '当前用户',
+        isAnonymous: false,
+        isCounselor: false,
+        createdAt: new Date(),
+        moodRating: 6,
+        moodDescription: '今天感觉还不错，虽然有些小压力',
+        content: '今天终于完成了那个困扰我很久的项目，虽然过程很辛苦，但看到最终结果还是很有成就感的。感谢团队伙伴们的支持，没有大家就没有今天的成果。明天继续加油！',
+        tags: ['work', 'friends'],
+        supportCount: 8,
+        commentCount: 2,
+        isSupported: false,
+        comments: []
+      },
+      {
+        id: 2,
+        username: '匿名用户',
+        isAnonymous: true,
+        isCounselor: false,
+        createdAt: new Date(Date.now() - 7200000), // 2小时前
+        moodRating: 4,
+        moodDescription: '有点难过，但在慢慢调整',
+        content: '最近总是想太多，睡眠也不太好。可能是换季的关系吧，希望能快点适应新的环境和节奏。看到大家的分享，感觉自己不是一个人在面对这些问题，谢谢大家。',
+        tags: ['self', 'health'],
+        supportCount: 15,
+        commentCount: 4,
+        isSupported: true,
+        comments: []
+      }
+    ])
 
     // 标签映射
     const tagLabels = {
@@ -153,140 +213,54 @@ export default {
       other: '其他'
     }
 
-    // 情绪标签
-    const moodLabels = {
-      1: '极度痛苦', 2: '很痛苦', 3: '痛苦', 4: '有些难过',
-      5: '一般', 6: '还可以', 7: '不错', 8: '很好',
-      9: '非常好', 10: '极棒'
-    }
-
-    // 检测是否需要截断
-    const needsTruncation = computed(() => {
-      return props.entry.content && props.entry.content.length > props.maxLength
-    })
-
-    // 截断后的内容
-    const truncatedContent = computed(() => {
-      if (!needsTruncation.value) return props.entry.content
-      return props.entry.content.slice(0, props.maxLength) + '...'
-    })
-
-    // 检测危机内容
-    const hasCrisisContent = computed(() => {
-      if (!props.entry.content) return false
-      const crisisKeywords = ['自杀', '结束生命', '不想活', '想死', '自残', '伤害自己']
-      const content = props.entry.content.toLowerCase()
-      return crisisKeywords.some(keyword => content.includes(keyword))
-    })
-
-    // 获取用户名首字母
-    const getInitials = (username) => {
-      if (!username) return '?'
-      return username.charAt(0).toUpperCase()
-    }
-
-    // 获取标签标签
     const getTagLabel = (tag) => {
       return tagLabels[tag] || tag
     }
 
-    // 获取情绪标签
-    const getMoodLabel = (rating) => {
-      return moodLabels[rating] || '未知'
+    // 事件处理
+    const handleRatingChange = (data) => {
+      console.log('情绪评分变化:', data)
     }
 
-    // 获取情绪颜色
-    const getMoodColor = (rating) => {
-      const colors = {
-        1: '#EF4444', 2: '#F97316', 3: '#F59E0B', 4: '#EAB308',
-        5: '#84CC16', 6: '#22C55E', 7: '#10B981', 8: '#14B8A6',
-        9: '#06B6D4', 10: '#3B82F6'
-      }
-      return colors[rating] || '#6B7280'
-    }
-
-    // 格式化日期
-    const formatDate = (date) => {
-      const now = new Date()
-      const entryDate = new Date(date)
-      const diff = now - entryDate
-      const hours = Math.floor(diff / 3600000)
-      const days = Math.floor(diff / 86400000)
-      
-      if (hours < 1) return '刚刚'
-      if (hours < 24) return `${hours}小时前`
-      if (days < 7) return `${days}天前`
-      return entryDate.toLocaleDateString('zh-CN')
-    }
-
-    // 切换展开状态
-    const toggleExpanded = () => {
-      isExpanded.value = !isExpanded.value
-    }
-
-    // 处理支持状态变化
     const handleSupportChanged = (data) => {
-      emit('entry-updated', {
-        ...props.entry,
-        supportCount: data.supportCount,
-        isSupported: data.isSupported
-      })
+      console.log('支持状态变化:', data)
     }
 
-    // 处理评论提交
     const handleCommentSubmitted = (data) => {
-      const updatedEntry = { ...props.entry }
-      if (!updatedEntry.comments) updatedEntry.comments = []
-      updatedEntry.comments.unshift(data.comment)
-      updatedEntry.commentCount = (updatedEntry.commentCount || 0) + 1
-      
-      emit('entry-updated', updatedEntry)
+      console.log('评论提交:', data)
     }
 
-    // 处理内容举报
     const handleContentReported = (data) => {
-      emit('entry-reported', {
-        entryId: data.contentId,
-        reason: data.reason
-      })
+      console.log('内容举报:', data)
+      alert('演示模式：举报功能已记录')
+    }
+
+    const handleEntryUpdated = (entry) => {
+      const index = demoEntries.findIndex(e => e.id === entry.id)
+      if (index !== -1) {
+        demoEntries[index] = entry
+      }
+    }
+
+    const handleEntryReported = (data) => {
+      console.log('日记举报:', data)
+      alert('演示模式：举报功能已记录')
     }
 
     return {
-      isExpanded,
-      needsTruncation,
-      truncatedContent,
-      hasCrisisContent,
-      getInitials,
+      demoMoodRating,
+      demoMoodDescription,
+      demoMoodTags,
+      demoComments,
+      demoEntries,
       getTagLabel,
-      getMoodLabel,
-      getMoodColor,
-      formatDate,
-      toggleExpanded,
+      handleRatingChange,
       handleSupportChanged,
       handleCommentSubmitted,
-      handleContentReported
+      handleContentReported,
+      handleEntryUpdated,
+      handleEntryReported
     }
   }
 }
 </script>
-
-<style scoped>
-.journal-card {
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.prose p {
-  margin-bottom: 0;
-}
-</style>
